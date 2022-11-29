@@ -29,5 +29,7 @@
     },
     "autoload-dev": {
         "psr-4": { "Zenstruck\\{namespace}\\Tests\\": ["tests/"] }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
