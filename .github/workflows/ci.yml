@@ -17,10 +17,15 @@ jobs:
   composer-validate:
     uses: zenstruck/.github/.github/workflows/php-composer-validate.yml@main
 
-  cs-check:
-    uses: zenstruck/.github/.github/workflows/php-cs-fixer.yml@main
-    with:
-      php: 8.0
-
   sca:
     uses: zenstruck/.github/.github/workflows/php-stan.yml@main
+    
+  fixcs:
+    needs: [tests, code-coverage, composer-validate, sca]
+    if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: zenstruck/.github@php-cs-fixer
+        with:
+          php: 8
+          key: ${{ secrets.GPG_PRIVATE_KEY }}
