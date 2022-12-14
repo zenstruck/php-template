@@ -22,7 +22,6 @@ jobs:
     
   fixcs:
     name: Run php-cs-fixer
-    needs: [tests, code-coverage, composer-validate, sca]
     if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +32,6 @@ jobs:
 
   sync-with-template:
     name: Sync meta files
-    needs: [tests, code-coverage, composer-validate, sca]
     if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
     runs-on: ubuntu-latest
     steps:
