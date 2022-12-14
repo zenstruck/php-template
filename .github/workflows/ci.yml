@@ -21,6 +21,7 @@ jobs:
     uses: zenstruck/.github/.github/workflows/php-stan.yml@main
     
   fixcs:
+    name: Run php-cs-fixer
     needs: [tests, code-coverage, composer-validate, sca]
     if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
     runs-on: ubuntu-latest
@@ -28,4 +29,14 @@ jobs:
       - uses: zenstruck/.github@php-cs-fixer
         with:
           php: 8
+          key: ${{ secrets.GPG_PRIVATE_KEY }}
+
+  sync-with-template:
+    name: Sync meta files
+    needs: [tests, code-coverage, composer-validate, sca]
+    if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: zenstruck/.github@sync-with-template
+        with:
           key: ${{ secrets.GPG_PRIVATE_KEY }}
