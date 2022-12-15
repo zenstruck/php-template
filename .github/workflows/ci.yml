@@ -22,6 +22,7 @@ jobs:
     
   fixcs:
     name: Run php-cs-fixer
+    needs: sync-with-template
     if: ${{ github.event_name == 'push' || github.event_name == 'schedule' }}
     runs-on: ubuntu-latest
     steps:
